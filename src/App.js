@@ -60,6 +60,7 @@ const App = (props) => {
               "Content-Type": "multipart/form-data",
             },
           });
+          props.history.push("/file-list");
         } else {
           setErrorMsg("Please select a file to add.");
         }
@@ -70,6 +71,7 @@ const App = (props) => {
       error.response && setErrorMsg(error.response.data);
     }
   };
+  //props.history.push("/file-list");
 
   return (
     <React.Fragment>
