@@ -33,6 +33,14 @@ const App = (props) => {
     setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png)$/));
   };
 
+  const updateBorder = (dragState) => {
+    if (dragState === "over") {
+      dropRef.current.style.border = "2px solid #000";
+    } else if (dragState === "leave") {
+      dropRef.current.style.border = "2px dashed #e9ebeb";
+    }
+  };
+
   const handleOnSubmit = async (event) => {
     event.preventDefault();
   };
@@ -69,7 +77,11 @@ const App = (props) => {
           </Col>
         </Row>
         <div className="upload-section mt-3">
-          <Dropzone onDrop={onDrop}>
+          <Dropzone
+            onDrop={onDrop}
+            onDragEnter={() => updateBorder("over")}
+            onDragLeave={() => updateBorder("leave")}
+          >
             {({ getRootProps, getInputProps }) => (
               <div {...getRootProps({ className: "drop-zone" })} ref={dropRef}>
                 <input {...getInputProps()} />
