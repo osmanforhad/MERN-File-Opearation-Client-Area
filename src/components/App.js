@@ -49,11 +49,12 @@ const App = (props) => {
                 value={state.description || ""}
                 placeholder="Enter description"
                 onChange={handleInputChange}
+                className="mt-3"
               />
             </Form.Group>
           </Col>
         </Row>
-        <Button variant="primary" type="submit">
+        <Button className="mt-3" variant="primary" type="submit">
           Submit
         </Button>
       </Form>
