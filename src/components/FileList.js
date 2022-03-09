@@ -8,18 +8,18 @@ const FilesList = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    const getFilesList = async () => {
-      try {
-        const { data } = await axios.get(`${API_URL}/getAllFiles`);
-        setErrorMsg("");
-        setFilesList(data);
-      } catch (error) {
-        error.response && setErrorMsg(error.response.data);
-      }
-    };
-
     getFilesList();
   }, []);
+
+  const getFilesList = async () => {
+    try {
+      const { data } = await axios.get(`${API_URL}/getAllFiles`);
+      setErrorMsg("");
+      setFilesList(data);
+    } catch (error) {
+      error.response && setErrorMsg(error.response.data);
+    }
+  };
 
   const downloadFile = async (id, path, mimetype) => {
     try {
@@ -37,9 +37,28 @@ const FilesList = () => {
     }
   };
 
+  const UserSearchHandler = async (event) => {
+    let searchKey = event.target.value;
+    if (searchKey) {
+      let SearchQuery = await fetch(`${API_URL}/UserSearch/${searchKey}`);
+      let searchResult = await SearchQuery.json();
+      if (searchResult) {
+        setFilesList(searchResult);
+      }
+    } else {
+      getFilesList();
+    }
+  };
+
   return (
     <div className="files-container">
       {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+      <input
+        type="text"
+        onChange={UserSearchHandler}
+        className="search-box-style mb-2"
+        placeholder="Search File Here..."
+      />
       <table className="files-table">
         <thead>
           <tr>

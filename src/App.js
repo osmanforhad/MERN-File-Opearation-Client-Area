@@ -3,6 +3,7 @@ import { Form, Row, Col, Button } from "react-bootstrap";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 import { API_URL } from "./utils/constants";
+import "./App.css";
 
 const App = (props) => {
   const [file, setFile] = useState(null); // state for storing actual image
