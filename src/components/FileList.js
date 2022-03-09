@@ -38,15 +38,23 @@ const FilesList = () => {
   };
 
   const UserSearchHandler = async (event) => {
-    let searchKey = event.target.value;
-    if (searchKey) {
-      let SearchQuery = await fetch(`${API_URL}/UserSearch/${searchKey}`);
-      let searchResult = await SearchQuery.json();
-      if (searchResult) {
-        setFilesList(searchResult);
+    event.preventDefault();
+    try {
+      let searchKey = event.target.value;
+      if (searchKey.length === 0) {
+        // return false;
+        getFilesList();
+      } else {
+        const { data } = await axios.get(`${API_URL}/UserSearch/${searchKey}`);
+        setErrorMsg("");
+        if (data) {
+          setFilesList(data);
+        } else {
+          getFilesList();
+        }
       }
-    } else {
-      getFilesList();
+    } catch (error) {
+      error.response && setErrorMsg(error.response.data);
     }
   };
 
